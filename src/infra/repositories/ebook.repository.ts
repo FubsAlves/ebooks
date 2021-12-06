@@ -18,41 +18,41 @@ export class DatabaseEbookRepository implements EbookRepository {
         id: id,
     });
   }
-  async insert(todo: TodoM): Promise<void> {
-    const todoEntity = this.toTodoEntity(todo);
-    await this.todoEntityRepository.insert(todoEntity);
+  async insert(ebook: EbookModel): Promise<void> {
+    const ebookEntity = this.toEbookEntity(ebook);
+    await this.ebookEntityRepository.insert(ebookEntity);
   }
-  async findAll(): Promise<TodoM[]> {
-    const todosEntity = await this.todoEntityRepository.find();
-    return todosEntity.map((todoEntity) => this.toTodo(todoEntity));
+  async findAll(): Promise<EbookModel[]> {
+    const ebooksEntity = await this.ebookEntityRepository.find();
+    return ebooksEntity.map((ebookEntity) => this.toEbook(ebookEntity));
   }
-  async findById(id: number): Promise<TodoM> {
-    const todoEntity = await this.todoEntityRepository.findOneOrFail(id);
-    return this.toTodo(todoEntity);
+  async findById(id: number): Promise<EbookModel> {
+    const ebookEntity = await this.ebookEntityRepository.findOneOrFail(id);
+    return this.toEbook(ebookEntity);
   }
   async deleteById(id: number): Promise<void> {
-    await this.todoEntityRepository.delete({ id: id });
+    await this.ebookEntityRepository.delete({ id: id });
   }
 
-  private toTodo(todoEntity: Todo): TodoM {
-    const todo: TodoM = new TodoM();
+  private toEbook(ebookEntity: Ebook): EbookModel {
+    const ebook: EbookModel = new EbookModel();
 
-    todo.id = todoEntity.id;
-    todo.content = todoEntity.content;
-    todo.isDone = todoEntity.isDone;
-    todo.createdate = todoEntity.createdate;
-    todo.updateddate = todoEntity.updateddate;
+    ebook.id = ebookEntity.id;
+    ebook.content = ebookEntity.content;
+    ebook.isDone = ebookEntity.isDone;
+    ebook.createdate = ebookEntity.createdate;
+    ebook.updateddate = ebookEntity.updateddate;
 
-    return todo;
+    return ebook;
   }
 
-  private toTodoEntity(todo: TodoM): Todo {
-    const todoEntity: Todo = new Todo();
+  private toEbookEntity(ebook: EbookModel): Ebook {
+    const ebookEntity: Ebook = new Ebook();
 
-    todoEntity.id = todo.id;
-    todoEntity.content = todo.content;
-    todoEntity.isDone = todo.isDone;
+    ebookEntity.id = ebook.id;
+    ebookEntity.content = ebook.content;
+    ebookEntity.isDone = ebook.isDone;
 
-    return todoEntity;
+    return ebookEntity;
   }
 }
